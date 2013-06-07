@@ -1,5 +1,5 @@
-module UCB::LDAP
-  module Person
+module UCB
+  module LDAP
     module CommonAttributes
 
       # Returns +true+ if the entry represents a test entry.

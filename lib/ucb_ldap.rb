@@ -1,23 +1,20 @@
-require "ucb_ldap/version"
 require 'rubygems'
 require 'net/ldap'
 require 'time'
-require 'exceptions'
-require 'schema'
-require 'schema_attribute'
-require 'entry'
 
-require 'person/affiliation_methods.rb'
-require 'person/generic_attributes.rb'
-require 'person.rb'
+require "ucb_ldap/version"
+require 'ucb_ldap/schema'
+require 'ucb_ldap/schema_attribute'
+require 'ucb_ldap/entry'
+require 'ucb_ldap/person'
+require 'ucb_ldap/job_appointment'
+require 'ucb_ldap/org'
+require 'ucb_ldap/namespace'
+require 'ucb_ldap/address'
+require 'ucb_ldap/student_term'
+require 'ucb_ldap/affiliation'
+require 'ucb_ldap/service'
 
-require 'ucb_ldap_person_job_appointment'
-require 'org'
-require 'namespace'
-require 'address'
-require 'student_term'
-require 'affiliation'
-require 'service'
 
 module UCB #:nodoc:
   ##
@@ -57,8 +54,8 @@ module UCB #:nodoc:
     end
 
 
-    HOST_PRODUCTION = 'ldap.berkeley.edu'
-    HOST_TEST       = 'ldap-test.berkeley.edu'
+    HOST_PRODUCTION = 'nds.berkeley.edu'
+    HOST_TEST       = 'nds-test.berkeley.edu'
 
     class << self
       ##
@@ -173,9 +170,9 @@ module UCB #:nodoc:
     private unless $TESTING
 
       ##
-      # The value of the :auth parameter for Net::LDAP.new().
+      # The value of the :auth parameter for Net::LDAP.new.
       #
-      def authentication_information()
+      def authentication_information
         password.nil? ?
           {:method => :anonymous} :
           {:method => :simple, :username => username, :password => password}
@@ -184,7 +181,7 @@ module UCB #:nodoc:
       ##
       # Returns +true+ if connection simple search works.
       #
-      def ldap_ping()
+      def ldap_ping
         search_attrs = {
           :base => "",
           :scope => Net::LDAP::SearchScope_BaseObject,
@@ -198,7 +195,7 @@ module UCB #:nodoc:
       ##
       # Returns new Net::LDAP instance.
       #
-      def new_net_ldap()
+      def new_net_ldap
         params = {
           :host => host,
           :auth => authentication_information,
@@ -215,7 +212,7 @@ module UCB #:nodoc:
       ##
       # Used for testing
       #
-      def clear_instance_variables()
+      def clear_instance_variables
         @host = nil
         @net_ldap = nil
         @username = nil

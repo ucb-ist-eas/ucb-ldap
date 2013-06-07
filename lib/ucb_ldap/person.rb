@@ -1,3 +1,5 @@
+require_relative 'person/affiliation_methods'
+require_relative 'person/common_attributes'
 
 module UCB::LDAP
   ##
@@ -56,62 +58,69 @@ module UCB::LDAP
   # See Ldap::Entry for general information on accessing attribute values.
   #
   class Person < Entry
-    class RecordNotFound < StandardError; end
+    class RecordNotFound < StandardError;
+    end
 
-    include AffiliationMethods
-    include GenericAttributes
+    include UCB::LDAP::AffiliationMethods
+    include UCB::LDAP::CommonAttributes
 
     @entity_name = 'person'
     @tree_base = 'ou=people,dc=berkeley,dc=edu'
 
-    class << self
-      ##
-      # Returns an instance of Person for given _uid_.
-      #
-      def find_by_uid(uid)
-        uid = uid.to_s
-        find_by_uids([uid]).first
-      end
-      alias :person_by_uid :find_by_uid
 
-      ##
-      # Returns an +Array+ of Person for given _uids_.
-      #
-      def find_by_uids(uids)
-        return [] if uids.size == 0
-        filters = uids.map{|uid| Net::LDAP::Filter.eq("uid", uid)}
-        search(:filter => self.combine_filters(filters, '|'))
-      end
-      alias :persons_by_uids :find_by_uids
+    ##
+    # Returns an instance of Person for given _uid_.
+    #
+    def self.find_by_uid(uid)
+      uid = uid.to_s
+      find_by_uids([uid]).first
+    end
 
-      ##
-      # Exclude test entries from search results unless told otherwise.
-      #
-      def search(args) #:nodoc:
-        results = super
-        include_test_entries? ? results : results.reject { |person| person.test? }
-      end
+    def self.person_by_uid(uid)
+      find_by_uid(uid)
+    end
 
-      ##
-      # If <tt>true</tt> test entries are included in search results
-      # (defalut is <tt>false</tt>).
-      #
-      def include_test_entries?
-        @include_test_entries ? true : false
-      end
+    ##
+    # Returns an +Array+ of Person for given _uids_.
+    #
+    def self.find_by_uids(uids)
+      return [] if uids.size == 0
+      filters = uids.map { |uid| Net::LDAP::Filter.eq("uid", uid) }
+      search(:filter => self.combine_filters(filters, '|'))
+    end
 
-      ##
-      # Setter for include_test_entries?
-      #
-      def include_test_entries=(include_test_entries)
-        @include_test_entries = include_test_entries
-      end
+    def self.persons_by_uids(uids)
+      find_by_uids(uids)
+    end
+
+    ##
+    # Exclude test entries from search results unless told otherwise.
+    #
+    def self.search(args) #:nodoc:
+      results = super
+      include_test_entries? ? results : results.reject { |person| person.test? }
+    end
+
+    ##
+    # If <tt>true</tt> test entries are included in search results
+    # (defalut is <tt>false</tt>).
+    #
+    def self.include_test_entries?
+      @include_test_entries ? true : false
+    end
+
+    ##
+    # Setter for include_test_entries?
+    #
+    def self.include_test_entries=(include_test_entries)
+      @include_test_entries = include_test_entries
     end
 
 
     def deptid
       berkeleyEduPrimaryDeptUnit
     end
+
     alias :dept_code :deptid
 
     def dept_name

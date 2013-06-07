@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe UCB::LDAP::Person, "searching for test entries" do
@@ -80,8 +80,8 @@ describe "UCB::LDAP::Person instance" do
   end
   
   it "should return email as scalar synonym for mail" do
-    @staff.mail.should == ['test@uclink.berkeley.edu'] 
-    @staff.email.should == 'test@uclink.berkeley.edu' 
+    @staff.mail.should == %w(test-212387@berkeley.edu)
+    @staff.email.should == 'test-212387@berkeley.edu'
   end
   
   it "should return phone as scalar synonym for telephoneNumber" do
@@ -170,7 +170,7 @@ describe "Employee" do
   end
   
   it "should return employee_expiration_date" do
-    p = Person.new({:berkeleyEduEmpExpDate => '20000102080000Z'})
+    p = Person.new({:berkeleyEduEmpExpDate => ['20000102080000Z']})
     p.employee_expiration_date.to_s.should == '2000-01-02'
   end
 end
@@ -199,7 +199,7 @@ describe "Student" do
   end
   
   it "should return student_expiration_date()" do
-    student = Person.new(:berkeleyEduStuExpDate => '20070912080000Z')
+    student = Person.new(:berkeleyEduStuExpDate => ['20070912080000Z'])
     student.student_expiration_date.to_s.should == '2007-09-12'
   end
 end
@@ -213,7 +213,7 @@ describe "Affiliate" do
   end
       
   it "should return affiliate_expiration_date()" do
-    student = Person.new(:berkeleyEduAffExpDate => '20070912080000Z')
+    student = Person.new(:berkeleyEduAffExpDate => ['20070912080000Z'])
     student.affiliate_expiration_date.to_s.should == '2007-09-12'
   end
   

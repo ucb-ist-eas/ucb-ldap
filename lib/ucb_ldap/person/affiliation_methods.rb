@@ -1,5 +1,5 @@
-module UCB::LDAP
-  module Person
+module UCB
+  module LDAP
     module AffiliationMethods
 
       ##
@@ -221,5 +221,6 @@ module UCB::LDAP
       end
 
     end
+
   end
 end

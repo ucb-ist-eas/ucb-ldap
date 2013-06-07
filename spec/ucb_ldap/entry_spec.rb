@@ -1,6 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
-require 'pp'
-
+require 'spec_helper'
 
 describe UCB::LDAP::Entry do
   before(:each) do
