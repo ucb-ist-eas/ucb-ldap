@@ -1,8 +1,9 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
+
 
 describe "UCB::LDAP::Affiliation" do
   before(:all) do
-    affiliation_bind() # in _setup_specs.rb
+    affiliation_bind
     @uid = "61065"
     @student = Person.find_by_uid(@uid)
     @datetime_string = '20010203040506Z'

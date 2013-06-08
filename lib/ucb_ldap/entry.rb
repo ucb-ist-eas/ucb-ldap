@@ -76,6 +76,7 @@ module UCB
     # * #delete/#delete! - instance methods that do LDAP delete
     #
     class Entry
+      TESTING = false
 
       ##
       # Returns new instance of UCB::LDAP::Entry.  The argument
@@ -85,12 +86,12 @@ module UCB
       # they are created by calls to UCB::LDAP.search and friends.
       #
       def initialize(net_ldap_entry) #:nodoc:
-        # Don't store Net::LDAP entry in object since it uses the block
-        # initialization method of Hash which can't be marshalled ... this
-        # means it can't be stored in a Rails session.
+                                     # Don't store Net::LDAP entry in object since it uses the block
+                                     # initialization method of Hash which can't be marshalled ... this
+                                     # means it can't be stored in a Rails session.
         @attributes = {}
         net_ldap_entry.each do |attr, value|
-          @attributes[canonical(attr)] = value.map{|v| v.dup}
+          @attributes[canonical(attr)] = value.map { |v| v.dup }
         end
       end
 
@@ -125,7 +126,7 @@ module UCB
       #   entry.update_attributes(attrs)
       #
       def update_attributes(attrs)
-        attrs.each{|k, v| self.send("#{k}=", v)}
+        attrs.each { |k, v| self.send("#{k}=", v) }
         if modify
           @attributes = self.class.find_by_dn(dn).attributes.dup
           return true
@@ -159,7 +160,7 @@ module UCB
       end
 
 
-      private unless $TESTING
+      #private unless TESTING
 
       ##
       # Used to get/set attribute values.
@@ -204,7 +205,7 @@ module UCB
 
       def modify_operations
         ops = []
-        assigned_attributes.keys.sort_by{|k| k.to_s}.each do |key|
+        assigned_attributes.keys.sort_by { |k| k.to_s }.each do |key|
           value = assigned_attributes[key]
           op = value.nil? ? :delete : :replace
           ops << [op, key, value]
@@ -224,6 +225,11 @@ module UCB
       class << self
 
         public
+
+        def filter_in(attribute_name, array_of_values)
+          filters = array_of_values.map { |value| Net::LDAP::Filter.eq(attribute_name, value) }
+          UCB::LDAP::Entry.combine_filters(filters, '|')
+        end
 
         # Creates and returns new entry.  Returns +false+ if unsuccessful.
         # Sets :objectclass key of <em>args[:attributes]</em> to
@@ -251,9 +257,9 @@ module UCB
         # Returns entry whose distinguised name is _dn_.
         def find_by_dn(dn)
           search(
-            :base => dn,
-            :scope => Net::LDAP::SearchScope_BaseObject,
-            :filter => "objectClass=*"
+              :base => dn,
+              :scope => Net::LDAP::SearchScope_BaseObject,
+              :filter => "objectClass=*"
           ).first
         end
 
@@ -277,7 +283,7 @@ module UCB
         #   combine_filters([f1, f2], '|') # same as: f1 | f2
         #
         def combine_filters(filters, operator = '&')
-          filters.inject{|accum, filter| accum.send(operator, filter)}
+          filters.inject { |accum, filter| accum.send(operator, filter) }
         end
 
         ##
@@ -288,8 +294,8 @@ module UCB
         #   UCB::LDAP::Entry.make_search_filter(:a1 => v1, :a2 => v2)
         #
         def make_search_filter(filter)
-          return filter if filter.instance_of?  Net::LDAP::Filter
-          return filter if filter.instance_of?  String
+          return filter if filter.instance_of? Net::LDAP::Filter
+          return filter if filter.instance_of? String
 
           filters = []
           # sort so result is predictable for unit test
@@ -355,7 +361,7 @@ module UCB
 
         def schema_attribute(attribute_name)
           schema_attributes_hash[canonical(attribute_name)] ||
-            raise(BadAttributeNameException, "'#{attribute_name}' is not a recognized attribute name")
+              raise(BadAttributeNameException, "'#{attribute_name}' is not a recognized attribute name")
         end
 
         ##
@@ -401,7 +407,8 @@ module UCB
           UCB::LDAP.net_ldap
         end
 
-        private unless $TESTING
+        ## TODO: restore private
+        # private unless $TESTING
 
         ##
         # Schema entity name.  Set in each subclass.
@@ -442,7 +449,7 @@ module UCB
           @tree_base = tree_base
         end
 
-      end  # end of class methods
+      end # end of class methods
     end
   end
 end

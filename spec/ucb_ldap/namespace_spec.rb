@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe UCB::LDAP::Namespace do
@@ -67,6 +67,6 @@ describe "UCB::LDAP::Namespace instance" do
   
   it "should return services as an array" do
     @n.services.class.should == Array
-    @n.services.should == ['calmail', "calnet", "webdisk"]
+    @n.services.should == ['calmail', "calnet"]
   end
 end

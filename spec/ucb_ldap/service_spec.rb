@@ -1,9 +1,9 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe UCB::LDAP::Service do
   before(:all) do
-    service_bind()
+    service_bind
     @student_uid = "61065"
     @student = Person.find_by_uid(@student_uid)
     @dt_str = '20010203080000Z'
@@ -14,7 +14,7 @@ describe UCB::LDAP::Service do
     UCB::LDAP.clear_authentication
   end
 
-  it "find_by_uid() should return terms" do
+  it "find_by_uid(uid) should return terms" do
     Service.find_by_uid(@student_uid).class.should == Array
   end
   

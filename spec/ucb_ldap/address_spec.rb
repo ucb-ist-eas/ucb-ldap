@@ -1,8 +1,9 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
+
 
 describe "UCB::LDAP::Address" do
   before(:all) do
-    address_bind()
+    address_bind
   end
 
   before(:each) do

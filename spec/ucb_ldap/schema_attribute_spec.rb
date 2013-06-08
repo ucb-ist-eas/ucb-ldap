@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe "The UCB::LDAP::Schema::Attribute constructor" do

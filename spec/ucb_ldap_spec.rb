@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "spec_helper"
 
 
 describe "UCB::LDAP" do
@@ -12,8 +12,8 @@ describe "UCB::LDAP" do
   end
   
   it "should define host constants" do
-    UCB::LDAP::HOST_PRODUCTION.should == 'ldap.berkeley.edu'      
-    UCB::LDAP::HOST_TEST.should == 'ldap-test.berkeley.edu' 
+    UCB::LDAP::HOST_PRODUCTION.should == 'nds.berkeley.edu'
+    UCB::LDAP::HOST_TEST.should == 'nds-test.berkeley.edu'
   end
   
   it "should default host to production" do
@@ -38,17 +38,6 @@ describe "UCB::LDAP" do
     UCB::LDAP.host = 'bogus'
     lambda { UCB::LDAP.new_net_ldap }.should raise_error(BindFailedException)
   end
-  
-  it "should reconnect after time-out"
-#     UCB::LDAP.host = HOST_TEST
-#     namespace_bind() # expires in 5 seconds
-#     net_ldap1 = UCB::LDAP.net_ldap
-#     net_ldap1.should equal(UCB::LDAP.net_ldap) # same instance right away
-#     30.times{|i| print "#{i},";STDOUT.flush; sleep(1)}; puts  # force time-out
-#     #UCB::LDAP.instance_variable_set(:@net_ldap, nil)
-#     #net_ldap1.should_not equal(UCB::LDAP.net_ldap)
-#     net_ldap1.bind
-#   end  
 end
 
 
@@ -62,7 +51,7 @@ describe "UCB::LDAP binding with rails" do
     UCB::LDAP.host = HOST_TEST
   end
   
-  it "bind_for_rails() should authenticate with environment-specific bind" do
+  it "bind_for_rails should authenticate with environment-specific bind" do
     bind_file = "#{File.dirname(__FILE__)}/rails_binds.yml"
     UCB::LDAP.should_receive(:authenticate).with('username_development', 'password_development')
     UCB::LDAP.bind_for_rails(bind_file, 'development')
@@ -70,14 +59,14 @@ describe "UCB::LDAP binding with rails" do
     lambda { UCB::LDAP.bind_for_rails(bind_file, 'bogus') }.should raise_error
   end
   
-  it "bind_for_rails() should raise exception if bind file not found" do
+  it "bind_for_rails should raise exception if bind file not found" do
     missing_file = "#{File.dirname(__FILE__)}/missing.yml"
     lambda { UCB::LDAP.bind_for_rails(missing_file, 'development') }.should raise_error  # no error raised
   end
 end
 
 
-describe "UCB::LDAP.new_net_ldap()" do
+describe "UCB::LDAP.new_net_ldap" do
   before(:all) do
     UCB::LDAP.clear_instance_variables
     UCB::LDAP.host = HOST_TEST
@@ -114,7 +103,7 @@ describe "UCB::LDAP.new_net_ldap()" do
 end
 
 
-describe "UCB::LDAP.net_ldap() w/anonymous bind" do
+describe "UCB::LDAP.net_ldap w/anonymous bind" do
   it "should return a cached Net::LDAP instance" do
     @net_ldap_1 = UCB::LDAP.net_ldap
     @net_ldap_1.should be_instance_of(Net::LDAP)
@@ -125,7 +114,7 @@ describe "UCB::LDAP.net_ldap() w/anonymous bind" do
 end
 
 
-describe "UCB::LDAP.authenticate()" do
+describe "UCB::LDAP.authenticate" do
   before(:all) do
     UCB::LDAP.clear_instance_variables
     UCB::LDAP.host = HOST_TEST
@@ -148,9 +137,9 @@ describe "UCB::LDAP.authenticate()" do
 end
 
 
-describe "UCB::LDAP.clear_authentication()" do
+describe "UCB::LDAP.clear_authentication" do
   it "should remove authentication and revert to anonymous bind" do
-    org_bind()
+    org_bind
     net_ldap1 = UCB::LDAP.net_ldap 
     net_ldap1.instance_variable_get(:@auth)[:method].should == :simple
 

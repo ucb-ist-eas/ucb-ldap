@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe UCB::LDAP::Org do
@@ -70,8 +70,7 @@ describe UCB::LDAP::Org do
     UCB::LDAP::Org.all_nodes_i.should_not be_nil
     # In the future, additional nodes may be added or deleted directly beneath
     # the root node, in which case this test would fail need to be altered.
-    # Such a change has not happend since 2002.
-    UCB::LDAP::Org.root_node.child_nodes_i.should have(13).keys
+    UCB::LDAP::Org.root_node.child_nodes_i.should have(14).keys
   end
 
   it "should be able to fetch orgs from cache" do
@@ -112,8 +111,9 @@ describe "UCB::LDAP::Org instance" do
   end
   
   it "should return processing_unit?" do
-    UCB::LDAP::Org.find_by_ou('jkasd').should be_processing_unit
     UCB::LDAP::Org.find_by_ou('UCBKL').should_not be_processing_unit
+    UCB::LDAP::Org.find_by_ou('jkasd').should_not be_processing_unit
+    UCB::LDAP::Org.find_by_ou('jkweb').should be_processing_unit
   end
 
   it "should return parent_deptids" do
@@ -139,7 +139,7 @@ describe "UCB::LDAP::Org instance" do
 
   it "should return child_nodes" do
     r = UCB::LDAP::Org.root_node
-    r.child_nodes.should have(13).items
+    r.child_nodes.should have(14).items
     r.child_nodes.first.deptid.should == 'AVCIS'
     r.child_nodes.last.deptid.should == 'VCURL'
     

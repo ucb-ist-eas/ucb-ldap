@@ -28,7 +28,7 @@ module UCB #:nodoc:
 
       SCHEMA_BASE_URL = 'calnet.berkeley.edu'
       SCHEMA_CONTENT_PATH = '/developers/developerResources/yaml/schema/schema.yaml'
-      SCHEMA_FILE = "#{File.dirname(__FILE__)}/../schema/schema.yml"
+      SCHEMA_FILE = "#{File.dirname(__FILE__)}/../../schema/schema.yml"
 
       class << self
 

@@ -152,6 +152,7 @@ module UCB
       def deptid
         ou.first
       end
+
       alias :code :deptid
 
       ##
@@ -183,7 +184,7 @@ module UCB
       def parent_deptids
         return @parent_deptids if @parent_deptids
         hierarchy_array = berkeleyEduOrgUnitHierarchyString.split("-")
-        hierarchy_array.pop  # last element is deptid ... toss it
+        hierarchy_array.pop # last element is deptid ... toss it
         @parent_deptids = hierarchy_array
       end
 
@@ -199,7 +200,7 @@ module UCB
       #
       def parent_node
         return nil if parent_deptids.size == 0
-        @parent_node ||= UCB::LDAP::Org.find_by_ou parent_deptid
+        @parent_node ||= UCB::LDAP::Org.find_by_ou(parent_deptid)
       end
 
       ##
@@ -233,8 +234,9 @@ module UCB
       # in the org node.
       #
       def persons
-        @persons ||= UCB::LDAP::Person.search(:filter => {:departmentnumber => ou})
+        @persons ||= UCB::LDAP::Person.search(:filter => { :departmentnumber => ou.first.to_s })
       end
+
       alias :people :persons
 
       #---
@@ -245,21 +247,22 @@ module UCB
 
       #---
       # Add node to child node array.
-      def push_child_node(child_node)#:nodoc:
+      def push_child_node(child_node) #:nodoc:
         @child_nodes ||= []
         unless @child_nodes.find { |n| n.ou == child_node.ou }
           @child_nodes.push(child_node)
         end
       end
 
-      private unless $TESTING
+      ## TODO: restore private
+      #private unless $TESTING
 
       ##
       # Loads child nodes for individual node.  If all_nodes_nodes()
       # has been called, child nodes are all loaded/calculated.
       #
       def load_child_nodes
-        @child_nodes ||= UCB::LDAP::Org.search(:scope => 1, :base => dn, :filter => {:ou => '*'})
+        @child_nodes ||= UCB::LDAP::Org.search(:scope => 1, :base => dn, :filter => { :ou => '*' })
       end
 
       ##
@@ -271,7 +274,7 @@ module UCB
 
 
       class << self
-        public
+        #public
 
         ##
         # Rebuild the org tree using fresh data from ldap
@@ -293,7 +296,7 @@ module UCB
         # Returns an instance of Org for the matching _ou_.
         #
         def find_by_ou(ou)
-          find_by_ou_from_cache(ou) || search(:filter => {:ou => ou}).first
+          find_by_ou_from_cache(ou) || search(:filter => { :ou => ou }).first
         end
 
         ##
@@ -324,15 +327,18 @@ module UCB
           return @all_nodes if @all_nodes
           return nodes_from_test_cache if $TESTING && @test_node_cache
 
-          bind_for_whole_tree
-          @all_nodes = search.inject({}) do |accum, org|
-            accum[org.deptid] = org if org.deptid != "Org Units"
-            accum
+          tree_username = "uid=istaswa-ruby,ou=applications,dc=berkeley,dc=edu"
+          tree_password = "t00lBox12"
+
+          UCB::LDAP.with_credentials(tree_username, tree_password) do
+            @all_nodes = search.inject({}) do |accum, org|
+              accum[org.deptid] = org if org.deptid != "Org Units"
+              accum
+            end
           end
 
           build_test_node_cache if $TESTING
           calculate_all_child_nodes
-          UCB::LDAP.clear_authentication
           @all_nodes
         end
 
@@ -344,16 +350,8 @@ module UCB
           find_by_ou('UCBKL')
         end
 
-        private unless $TESTING
-
-        ##
-        # Use bind that allows for retreiving entire org tree in one search.
-        #
-        def bind_for_whole_tree
-          username = "uid=istaswa-ruby,ou=applications,dc=berkeley,dc=edu"
-          password = "t00lBox12"
-          UCB::LDAP.authenticate(username, password)
-        end
+        ## TODO restore private
+        #private unless $TESTING
 
         ##
         # Returns an instance of Org from the local if cache exists, else +nil+.

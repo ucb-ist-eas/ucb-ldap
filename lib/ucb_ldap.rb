@@ -16,8 +16,9 @@ require 'ucb_ldap/affiliation'
 require 'ucb_ldap/service'
 
 
-module UCB #:nodoc:
-  ##
+module UCB
+  #:nodoc:
+  #
   # =UCB::LDAP
   #
   # <b>If you are doing searches that don't require a privileged bind
@@ -55,9 +56,22 @@ module UCB #:nodoc:
 
 
     HOST_PRODUCTION = 'nds.berkeley.edu'
-    HOST_TEST       = 'nds-test.berkeley.edu'
+    HOST_TEST = 'nds-test.berkeley.edu'
 
     class << self
+      # Execute UCB::LDAP commands with a different username and password.
+      # Original credentials are restored.
+      def with_credentials(username_to_use, password_to_use)
+        original_username = username
+        original_password = password
+
+        UCB::LDAP.authenticate(username_to_use, password_to_use)
+
+        yield
+      ensure
+        UCB::LDAP.authenticate(original_username, original_password)
+      end
+
       ##
       # Give (new) bind credentials to LDAP.  An attempt will be made
       # to bind and will raise BindFailedException if bind fails.
@@ -167,15 +181,16 @@ module UCB #:nodoc:
         arg.nil? ? nil : DateTime.parse(Time.parse(arg.to_s).localtime.to_s)
       end
 
-    private unless $TESTING
+      ## TODO: restore private
+      # private unless $TESTING
 
       ##
       # The value of the :auth parameter for Net::LDAP.new.
       #
       def authentication_information
         password.nil? ?
-          {:method => :anonymous} :
-          {:method => :simple, :username => username, :password => password}
+            { :method => :anonymous } :
+            { :method => :simple, :username => username, :password => password }
       end
 
       ##
@@ -183,9 +198,9 @@ module UCB #:nodoc:
       #
       def ldap_ping
         search_attrs = {
-          :base => "",
-          :scope => Net::LDAP::SearchScope_BaseObject,
-          :attributes => [1.1]
+            :base => "",
+            :scope => Net::LDAP::SearchScope_BaseObject,
+            :attributes => [1.1]
         }
         result = false
         @net_ldap.search(search_attrs) { result = true }
@@ -197,10 +212,10 @@ module UCB #:nodoc:
       #
       def new_net_ldap
         params = {
-          :host => host,
-          :auth => authentication_information,
-          :port => 636,
-          :encryption => {:method =>:simple_tls}
+            :host => host,
+            :auth => authentication_information,
+            :port => 636,
+            :encryption => { :method => :simple_tls }
         }
         @net_ldap = Net::LDAP.new(params)
         @net_ldap.bind || raise(BindFailedException)

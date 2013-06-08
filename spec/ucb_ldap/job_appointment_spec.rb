@@ -1,9 +1,9 @@
-require File.expand_path("#{File.dirname(__FILE__)}/_setup")
+require_relative "../spec_helper"
 
 
 describe "UCB::LDAP::JobAppointment" do
   before(:all) do
-    job_appointment_bind() # in _setup_specs.rb
+    job_appointment_bind
     @sh_appts = JobAppointment.find_by_uid('61065')
     @sh_appt = @sh_appts.first
   end
@@ -31,7 +31,7 @@ describe "UCB::LDAP::JobAppointment" do
   end
   
   it "should return Personnel Program Code" do
-    @sh_appt.personnel_program_code.should == "1"
+    @sh_appt.personnel_program_code.should == "2"
   end
   
   it "should return primary? flag" do
@@ -51,7 +51,7 @@ describe "UCB::LDAP::JobAppointment" do
   end
   
   it "should return title code" do
-    @sh_appt.title_code.should == '7316'
+    @sh_appt.title_code.should == '0531'
   end
   
   it "should return appointment type" do
@@ -61,6 +61,5 @@ describe "UCB::LDAP::JobAppointment" do
   it "should return wos? flag" do
     @sh_appt.should_not be_wos
   end
-  
 end
 
