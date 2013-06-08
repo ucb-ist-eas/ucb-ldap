@@ -1,6 +1,11 @@
 # UCB::LDAP Changelog
 
-## Version 2.0.0, April 4, 2012
+## Version 2.0.0.pre3, June 8, 2013
+* Reorganize file layout
+* Fix bug where credentials get switched when building org tree
+* Update default ldap hosts to new ldap host names
+
+## Version 2.0.0.pre1, April 4, 2012
 * Switch from ruby-net-ldap to net-ldap (`UCB::LDAP` should now work with ruby-1.9.x)
 
 ## Version 1.4.2, August 3, 2010
