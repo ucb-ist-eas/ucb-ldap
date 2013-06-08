@@ -23,56 +23,60 @@ Search the directory specifying tree base and filter, getting back generic `UCB:
   entry.sn              #=> 'Doe'
 ```
 
-See UCB::LDAP::Entry for more information.
+See `UCB::LDAP::Entry` for more information.
 
 ###Person Search
 
 Search the Person tree getting back UCB::LDAP::Person instances:
 
+```ruby
   person = UCB::LDAP::Person.find_by_uid("123")
-
   person.firstname           #=> "John"
   person.affiliations        #=> ['EMPLOYEE-TYPE-STAFF']
   person.employee?           #=> true
   person.employee_staff?     #=> true
   person.employee_academic?  #=> false
   person.student?            #=> false
+```
 
-See UCB::LDAP::Person for more information.
+See `UCB::LDAP::Person` for more information.
 
 ###Org Unit Search
 
-Search the Org Unit tree getting back UCB::LDAP::Org instances:
+Search the Org Unit tree getting back `UCB::LDAP::Org` instances:
 
+``` ruby
   dept = UCB::LDAP::Org.org_by_ou 'jkasd'
-
   dept.deptid         #=> "JKASD"
   dept.name           #=> "Administrative Systems Dept"
+```
 
-See UCB::LDAP::Org for more information.
+See `UCB::LDAP::Org` for more information.
 
 ###Privileged Binds
 
-If you want access the directory anonomously, no credentials are required.
+If you want access the directory anonymously, no credentials are required.
 If you want to access via a privileged bind, authenticate before querying:
 
+```ruby
   p = UCB::LDAP::Person.find_by_uid("123")
   p.non_public_attr    #=> NoMethodError
 
   UCB::LDAP.authenticate("mybind", "mypassword")
   p = UCB::LDAP::Person.find_by_uid("123")
   p.non_public_attr    #=> "some value"
+```
 
 ###Privileged Binds and Rails
 
-See UCB::LDAP.bind_for_rails
+See `UCB::LDAP.bind_for_rails`
 
 ##Dependencies
 
 * Net::LDAP
-* Ruby 1.8.5 or better
+* Ruby 1.9.2 or better
 
 ##Maintainers
 
-Steven Hansen
-Steve Downey
+* Steven Hansen
+* Steve Downey
