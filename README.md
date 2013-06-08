@@ -1,18 +1,18 @@
-=UC Berkeley LDAP
+#UC Berkeley LDAP
 
 UCB::LDAP is a wrapper module around Net::LDAP intended to simplify searching the UC Berkeley
 LDAP directory: http://directory.berkeley.edu
 
-==Introduction to LDAP
+##Introduction to LDAP
 If you are blissfully ignorant of LDAP, you should familiarize yourself with some of the basics.
 Here is a great online resource: http://www.zytrax.com/books/ldap
 
 The RDoc for the ruby-net-ldap Gem (http://rubyfurnace.com/docs/ruby-net-ldap-0.0.4/classes/Net/LDAP.html) also has a good introduction to LDAP.
 
 
-==Examples
+##Examples
 
-===General Search
+###General Search
 
 Search the directory specifying tree base and
 filter, getting back generic UCB::LDAP::Entry instances:
@@ -25,7 +25,7 @@ filter, getting back generic UCB::LDAP::Entry instances:
 
 See UCB::LDAP::Entry for more information.
 
-===Person Search
+###Person Search
 
 Search the Person tree getting back UCB::LDAP::Person instances:
 
@@ -40,7 +40,7 @@ Search the Person tree getting back UCB::LDAP::Person instances:
 
 See UCB::LDAP::Person for more information.
 
-===Org Unit Search
+###Org Unit Search
 
 Search the Org Unit tree getting back UCB::LDAP::Org instances:
 
@@ -51,7 +51,7 @@ Search the Org Unit tree getting back UCB::LDAP::Org instances:
 
 See UCB::LDAP::Org for more information.
 
-===Privileged Binds
+###Privileged Binds
 
 If you want access the directory anonomously, no credentials are required.
 If you want to access via a privileged bind, authenticate before querying:
@@ -63,16 +63,16 @@ If you want to access via a privileged bind, authenticate before querying:
   p = UCB::LDAP::Person.find_by_uid("123")
   p.non_public_attr    #=> "some value"
 
-=== Privileged Binds and Rails
+###Privileged Binds and Rails
 
 See UCB::LDAP.bind_for_rails()
 
-==Dependencies
+##Dependencies
 
 * Net::LDAP
 * Ruby 1.8.5 or better
 
-==Authors
+##Authors
 
 Steven Hansen runner@berkeley.edu
 Lucas Rockwell
