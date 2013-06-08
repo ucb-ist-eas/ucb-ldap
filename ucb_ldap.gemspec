@@ -6,10 +6,10 @@ Gem::Specification.new do |spec|
   spec.name          = "ucb_ldap"
   spec.version       = UcbLdap::VERSION
   spec.authors       = ["Steven Hansen, Steve Downey"]
-  spec.email         = %w{runner@berkeley.edu}
+  spec.email         = %w{sahglie@gmail.com}
   spec.description   = %q{Convenience classes for interacing with UCB's LDAP directory}
   spec.summary       = %q{Convenience classes for interacing with UCB's LDAP directory}
-  spec.homepage      = "http://ucbrb.rubyforge.org/ucb_ldap"
+  spec.homepage      = "https://github.com/sahglie/ucb-ldap"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
