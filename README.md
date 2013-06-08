@@ -14,14 +14,14 @@ The RDoc for the ruby-net-ldap Gem (http://rubyfurnace.com/docs/ruby-net-ldap-0.
 
 ###General Search
 
-Search the directory specifying tree base and
-filter, getting back generic UCB::LDAP::Entry instances:
+Search the directory specifying tree base and filter, getting back generic `UCB::LDAP::Entry` instances:
 
-  entries = UCB::LDAP.search(:base => "ou=people,dc=berkeley,dc=edu", :filter => {:uid => 123}
-
+```ruby
+  entries = UCB::LDAP.search(:base => "ou=people,dc=berkeley,dc=edu", :filter => {:uid => 123})
   entry.uid             #=> '123'
   entry.givenname       #=> 'John'
   entry.sn              #=> 'Doe'
+```
 
 See UCB::LDAP::Entry for more information.
 
@@ -65,15 +65,14 @@ If you want to access via a privileged bind, authenticate before querying:
 
 ###Privileged Binds and Rails
 
-See UCB::LDAP.bind_for_rails()
+See UCB::LDAP.bind_for_rails
 
 ##Dependencies
 
 * Net::LDAP
 * Ruby 1.8.5 or better
 
-##Authors
+##Maintainers
 
-Steven Hansen runner@berkeley.edu
-Lucas Rockwell
+Steven Hansen
 Steve Downey
