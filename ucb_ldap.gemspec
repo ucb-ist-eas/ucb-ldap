@@ -5,7 +5,7 @@ require 'ucb_ldap/version'
 Gem::Specification.new do |spec|
   spec.name          = "ucb_ldap"
   spec.version       = UcbLdap::VERSION
-  spec.authors       = ["Steven Hansen, Steve Downey, Lucas Rockwell"]
+  spec.authors       = ["Steven Hansen, Steve Downey"]
   spec.email         = %w{runner@berkeley.edu}
   spec.description   = %q{Convenience classes for interacing with UCB's LDAP directory}
   spec.summary       = %q{Convenience classes for interacing with UCB's LDAP directory}

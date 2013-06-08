@@ -46,7 +46,7 @@ See `UCB::LDAP::Person` for more information.
 Search the Org Unit tree getting back `UCB::LDAP::Org` instances:
 
 ``` ruby
-  dept = UCB::LDAP::Org.org_by_ou 'jkasd'
+  dept = UCB::LDAP::Org.org_by_ou('jkasd')
   dept.deptid         #=> "JKASD"
   dept.name           #=> "Administrative Systems Dept"
 ```
