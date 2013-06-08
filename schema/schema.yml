@@ -3,23 +3,23 @@
 # Last Generated: Mon Jun 22 16:41:39 2009
 #
 # This file contains information about the following part of the tree:
-#  namespaceName
-#  namespaceService
-#  org
-#  person
-#  personAddress
-#  personAffiliateAffiliation
-#  personJobAppointment
-#  personService
-#  personStudentTerm
-#  unibears
-#  securityQuestion
-#  honorific
-#  generationalTitle
-#  salutation
-#  calnetSyncTimeProperty
-#  calnetMaxUidProperty
-#  casServiceRegistry
+#	namespaceName
+#	namespaceService
+#	org
+#	person
+#	personAddress
+#	personAffiliateAffiliation
+#	personJobAppointment
+#	personService
+#	personStudentTerm
+#	unibears
+#	securityQuestion
+#	honorific
+#	generationalTitle
+#	salutation
+#	calnetSyncTimeProperty
+#	calnetMaxUidProperty
+#	casServiceRegistry
 #
 # Please address questions or problems to calnet-idm@lists.berkeley.edu
 #
