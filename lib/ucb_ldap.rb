@@ -156,7 +156,7 @@ module UCB
       # Runtime error will be raised if bind_file not found or if environment key not
       # found in bind_file.
       #
-      def bind_for_rails(bind_file = "#{Rails.root}/config/ldap.yml", environment = Rails.env)
+      def bind_for_rails(bind_file = "#{::Rails.root}/config/ldap.yml", environment = ::Rails.env)
         bind(bind_file, environment)
       end
 
