@@ -17,10 +17,12 @@ The RDoc for the ruby-net-ldap Gem (http://rubyfurnace.com/docs/ruby-net-ldap-0.
 Search the directory specifying tree base and filter, getting back generic `UCB::LDAP::Entry` instances:
 
 ```ruby
-  entries = UCB::LDAP.search(:base => "ou=people,dc=berkeley,dc=edu", :filter => {:uid => 123})
-  entry.uid             #=> '123'
-  entry.givenname       #=> 'John'
-  entry.sn              #=> 'Doe'
+  entries = UCB::LDAP::Entry.search(:base => "ou=people,dc=berkeley,dc=edu", :filter => {:uid => 123})
+  entries.class            #=> Array
+  entries[0].class         #=> UCB::LDAP::Entry
+  entries[0].uid           #=> '123'
+  entries[0].givenname     #=> 'John'
+  entries[0].sn            #=> 'Doe'
 ```
 
 See `UCB::LDAP::Entry` for more information.
