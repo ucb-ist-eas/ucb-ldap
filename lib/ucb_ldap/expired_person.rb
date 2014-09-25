@@ -10,5 +10,14 @@ module UCB::LDAP
     @entity_name = 'person'
     @tree_base = 'ou=expired people,dc=berkeley,dc=edu'
 
+    ##
+    # Returns expired status
+    #
+    # True by definition for expired users
+    #
+    def expired?
+      true
+    end
+
   end
 end

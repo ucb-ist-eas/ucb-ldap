@@ -153,5 +153,14 @@ module UCB::LDAP
       @org_node ||= UCB::LDAP::Org.find_by_ou(deptid)
     end
 
+    ##
+    # Returns expired status
+    #
+    # False by definition for normal users, overridable by subclasses
+    #
+    def expired?
+      false
+    end
+
   end
 end
