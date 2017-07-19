@@ -93,7 +93,12 @@ module UCB #:nodoc:
         def yaml_from_url #:nodoc:
           http = Net::HTTP.new(SCHEMA_BASE_URL, 443)
           http.use_ssl = true
-          http.get(SCHEMA_CONTENT_PATH).body
+          response = http.get(SCHEMA_CONTENT_PATH)
+          if response.code == "200"
+            response.body
+          else
+            raise("#{SCHEMA_BASE_URL}/#{SCHEMA_CONTENT_PATH} returned #{response.code}")
+          end
         end
 
         def load_attributes_from_file #:nodoc:
