@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
 
-  spec.add_runtime_dependency "net-ldap", "0.2.2"
+  spec.add_runtime_dependency "net-ldap", "0.16.1"
 end
