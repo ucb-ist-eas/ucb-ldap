@@ -27,6 +27,10 @@ module UCB
         mail.first
       end
 
+      def officialemail
+        berkeleyEduOfficialEmail.first
+      end
+
       def phone
         telephoneNumber.first
       end
