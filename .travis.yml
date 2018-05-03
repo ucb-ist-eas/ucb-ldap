@@ -1,6 +1,5 @@
 branches:
   except:
-  - /^.*-\d+$/
   - /^.*\/.*+$/
 language: ruby
 rvm:
