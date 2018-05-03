@@ -1,9 +1,0 @@
-# Used for testing Rails binds -- these aren't real credentials
-development:
-    username: username_development
-    password: password_development
-  
-production:
-    username: username_production
-    password: password_production
-

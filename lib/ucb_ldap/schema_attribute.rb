@@ -20,11 +20,11 @@ module UCB
       #   uid_attr.required?        #=> true
       #   uid_attr.type             #=> 'string'
       #
-      #   uas_attr = UCB::LDAP::Person.attribute('berkeleyEduUasEligFlag') # case doesn't matter
+      #   uas_attr = UCB::LDAP::Person.attribute('berkeleyEduNameGenerational') # case doesn't matter
       #
-      #   uas_attr.name             #=> 'berkeleyEduUasEligFlag'
+      #   uas_attr.name             #=> 'berkeleyEduNameGenerational'
       #   uas_attr.aliases          #=> ['ucbvalidflag']
-      #   uas_attr.description      #=> 'UAS Eligibility Flag'
+      #   uas_attr.description      #=> 'Generational Name'
       #   uas_attr.multi_valued?    #=> false
       #   uas_attr.required?        #=> false
       #   uas_attr.type             #=> 'boolean'

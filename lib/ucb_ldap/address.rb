@@ -25,11 +25,13 @@ module UCB
       end
 
       def address_type
-        berkeleyEduPersonAddressType
+        warn "DEPRECATED: address_type is no longer supported"
+        []
       end
 
       def building_code
-        berkeleyEduPersonAddressBuildingCode
+        warn "DEPRECATED: building_code is no longer supported"
+        []
       end
 
       def city
@@ -37,11 +39,13 @@ module UCB
       end
 
       def country_code
-        berkeleyEduPersonAddressCountryCode
+        warn "DEPRECATED: country_code is no longer supported"
+        []
       end
 
       def department_name
-        berkeleyEduPersonAddressUnitCalNetDeptName
+        warn "DEPRECATED: department_name is no longer supported"
+        []
       end
 
       def department_acronym
@@ -49,7 +53,8 @@ module UCB
       end
 
       def directories
-        berkeleyEduPersonAddressPublications
+        warn "DEPRECATED: directories is no longer supported"
+        []
       end
 
       # Returns email address associated with this Address.
@@ -79,7 +84,8 @@ module UCB
       end
 
       def sort_order
-        berkeleyEduPersonAddressSortOrder.first || 0
+        warn "DEPRECATED: sort_order is no longer supported"
+        0
       end
 
       def state
@@ -95,9 +101,8 @@ module UCB
         # Returns an empty Array ([]) if nothing is found.
         #
         def find_by_uid(uid)
-          base = "uid=#{uid},ou=people,dc=berkeley,dc=edu"
-          filter = Net::LDAP::Filter.eq("objectclass", 'berkeleyEduPersonAddress')
-          search(:base => base, :filter => filter).sort_by{|addr| addr.sort_order}
+          warn "DEPRECATED: Addresses are no longer supported by LDAP. This method will always return an empty Array"
+          []
         end
 
       end

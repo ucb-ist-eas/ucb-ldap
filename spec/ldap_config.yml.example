@@ -1,0 +1,5 @@
+ ldap:
+   host: nds.berkeley.edu
+   username:
+   password:
+   include_test_entries: true

@@ -1,0 +1,17 @@
+branches:
+  except:
+  - /^.*-\d+$/
+  - /^.*\/.*+$/
+language: ruby
+rvm:
+  - 2.4.2
+install: true
+before_install:
+  openssl aes-256-cbc -K $encrypted_b0cce8ce5aaf_key -iv $encrypted_b0cce8ce5aaf_iv -in spec/ldap_config.yml.enc -out spec/ldap_config.yml -d
+script:
+  - bundle exec rspec
+cache:
+  directories:
+    - vendor/bundle
+notifications:
+  slack: infinitered:vEwHyTPtHfTgpT5xdCA2ZkgX

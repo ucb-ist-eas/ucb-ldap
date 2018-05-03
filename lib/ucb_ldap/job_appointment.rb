@@ -20,45 +20,55 @@ module UCB
       @entity_name = 'personJobAppointment'
 
       def cto_code
-        berkeleyEduPersonJobApptCTOCode
+        warn "DEPRECATED: cto_code is no longer supported"
+        []
       end
 
       def deptid
-        berkeleyEduPersonJobApptDepartment
+        warn "DEPRECATED: deptid is no longer supported"
+        []
       end
 
       def record_number
-        berkeleyEduPersonJobApptEmpRecNumber.to_i
+        warn "DEPRECATED: record_number is no longer supported"
+        []
       end
 
       def personnel_program_code
-        berkeleyEduPersonJobApptPersPgmCode
+        warn "DEPRECATED: personnel_program_code is no longer supported"
+        []
       end
 
       def primary?
-        berkeleyEduPersonJobApptPrimaryFlag
+        warn "DEPRECATED: primary? is no longer supported"
+        []
       end
 
       # Returns Employee Relation Code
       def erc_code
-        berkeleyEduPersonJobApptRelationsCode
+        warn "DEPRECATED: erc_code is no longer supported"
+        []
       end
 
       def represented?
-        berkeleyEduPersonJobApptRepresentation != 'U'
+        warn "DEPRECATED: represented? is no longer supported"
+        []
       end
 
       def title_code
-        berkeleyEduPersonJobApptTitleCode
+        warn "DEPRECATED: title_code is no longer supported"
+        []
       end
 
       def appointment_type
-        berkeleyEduPersonJobApptType
+        warn "DEPRECATED: appointment_type is no longer supported"
+        []
       end
 
       # Returns +true+ if appointment is Without Salary
       def wos?
-        berkeleyEduPersonJobApptWOS
+        warn "DEPRECATED: wos? is no longer supported"
+        []
       end
 
 
@@ -67,9 +77,8 @@ module UCB
       # Returns an empty Array ([]) if nothing is found.
       #
       def self.find_by_uid(uid)
-        base = "uid=#{uid},ou=people,dc=berkeley,dc=edu"
-        filter = Net::LDAP::Filter.eq("objectclass", 'berkeleyEduPersonJobAppt')
-        search(:base => base, :filter => filter).sort_by { |appt| appt.record_number }
+        warn "DEPRECATED: LDAP no longer provides job appointment data. This method will always return an empty array"
+        []
       end
 
     end

@@ -221,7 +221,7 @@ module UCB
         @net_ldap = Net::LDAP.new(params)
         @net_ldap.bind || raise(BindFailedException)
         @net_ldap
-      rescue Net::LDAP::LdapError => e
+      rescue Net::LDAP::Error => e
         raise(BindFailedException)
       end
 

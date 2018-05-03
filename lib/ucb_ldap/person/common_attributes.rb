@@ -41,21 +41,24 @@ module UCB
       # Requires a bind with access to namespaces.
       # See UCB::LDAP.authenticate().
       def namespaces
-        @namespaces ||= Namespace.find_by_uid(uid)
+        warn "DEPRECATED: this is no longer supported by LDAP. This method will always return an empty Array"
+        []
       end
 
       # Returns +Array+ of Service for this Person.
       # Requires a bind with access to services.
       # See UCB::LDAP.authenticate().
       def services
-        @services ||= Service.find_by_uid(uid)
+        warn "DEPRECATED: this is no longer supported by LDAP. This method will always return an empty Array"
+        []
       end
 
       # Returns +Array+ of Address for this Person.
       # Requires a bind with access to addresses.
       # See UCB::LDAP.authenticate().
       def addresses
-        @addresses ||= Address.find_by_uid(uid)
+        warn "DEPRECATED: use postalAddress from a Person entry"
+        []
       end
 
     end

@@ -26,14 +26,16 @@ module UCB
       # Returns an +Array+ of Namespace for _uid_.
       #
       def self.find_by_uid(uid)
-        search(:filter => "uid=#{uid}")
+        warn "DEPRECATED: Namespaces are no longer supported by LDAP. This method always returns an empty Array"
+        []
       end
 
       ##
       # Returns Namespace instance for _cn_.
       #
       def self.find_by_cn(cn)
-        search(:filter => "cn=#{cn}").first
+        warn "DEPRECATED: Namespaces are no longer supported by LDAP. This method always returns an empty Array"
+        []
       end
     end
   end

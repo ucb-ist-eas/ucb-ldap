@@ -52,7 +52,8 @@ module UCB
       end
 
       def employee_expiration_date
-        Date.parse(berkeleyEduEmpExpDate.to_s)
+        warn "DEPRECATED: employee_expiration_date is no longer supported"
+        nil
       end
 
       def employee?
@@ -72,7 +73,8 @@ module UCB
       end
 
       def student_expiration_date
-        Date.parse(berkeleyEduStuExpDate.to_s)
+        warn "DEPRECATED: student_expiration_date is no longer supported"
+        nil
       end
 
       def student_registered?
@@ -217,7 +219,8 @@ module UCB
       end
 
       def affiliate_expiration_date
-        Date.parse(berkeleyEduAffExpDate.to_s)
+        warn "DEPRECATED: affiliate_expiration_date is no longer supported"
+        nil
       end
 
     end
