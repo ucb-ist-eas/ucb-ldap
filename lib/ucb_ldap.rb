@@ -57,7 +57,6 @@ module UCB
 
 
     HOST_PRODUCTION = 'nds.berkeley.edu'
-    HOST_TEST = 'nds-test.berkeley.edu'
 
     class << self
       # Execute UCB::LDAP commands with a different username and password.
@@ -134,31 +133,6 @@ module UCB
 
       def username #:nodoc:
         @username
-      end
-
-      ##
-      # If you are using UCB::LDAP in a Rails application you can specify binds on a
-      # per-environment basis, just as you can with database credentials.
-      #
-      #   # in ../config/ldap.yml
-      #
-      #   development:
-      #     username: user_dev
-      #     password: pass_dev
-      #
-      #   # etc.
-      #
-      #
-      #   # in ../config/environment.rb
-      #
-      #   require 'ucb_ldap'
-      #   UCB::LDAP.bind_for_rails()
-      #
-      # Runtime error will be raised if bind_file not found or if environment key not
-      # found in bind_file.
-      #
-      def bind_for_rails(bind_file = "#{::Rails.root}/config/ldap.yml", environment = ::Rails.env)
-        bind(bind_file, environment)
       end
 
       def bind(bind_file, environment)
