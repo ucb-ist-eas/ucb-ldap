@@ -73,6 +73,16 @@ module UCB
       end
 
       ##
+      # Sets the config values we want to use, but doesn't actually connect
+      # to the server
+      #
+      def initialize(username, password, host=HOST_PRODUCTION)
+        @username = username
+        @password = password
+        @host = host
+      end
+
+      ##
       # Give (new) bind credentials to LDAP.  An attempt will be made
       # to bind and will raise BindFailedException if bind fails.
       #
