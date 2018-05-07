@@ -20,67 +20,83 @@ module UCB
       @entity_name = 'personStudentTerm'
 
       def change_datetime
-        UCB::LDAP.local_datetime_parse(berkeleyEduStuChangeDate)
+        warn "DEPRECATED: change_datetime is no longer supported"
+        []
       end
 
       def college_code
-        berkeleyEduStuCollegeCode
+        warn "DEPRECATED: college_code is no longer supported"
+        []
       end
 
       def college_name
-        berkeleyEduStuCollegeName
+        warn "DEPRECATED: college_name is no longer supported"
+        []
       end
 
       def level_code
-        berkeleyEduStuEduLevelCode
+        warn "DEPRECATED: level_code is no longer supported"
+        []
       end
 
       def level_name
-        berkeleyEduStuEduLevelName
+        warn "DEPRECATED: level_name is no longer supported"
+        []
       end
 
       def role_code
-        berkeleyEduStuEduRoleCode
+        warn "DEPRECATED: role_code is no longer supported"
+        []
       end
 
       def role_name
-        berkeleyEduStuEduRoleName
+        warn "DEPRECATED: role_name is no longer supported"
+        []
       end
 
       def major_code
-        berkeleyEduStuMajorCode
+        warn "DEPRECATED: major_code is no longer supported"
+        []
       end
 
       def major_name
-        berkeleyEduStuMajorName
+        warn "DEPRECATED: major_name is no longer supported"
+        []
       end
 
       def registration_status_code
-        berkeleyEduStuRegStatCode
+        warn "DEPRECATED: registration_status_code is no longer supported"
+        []
       end
 
       def registration_status_name
-        berkeleyEduStuRegStatName
+        warn "DEPRECATED: registration_status_name is no longer supported"
+        []
       end
 
       def term_code
-        berkeleyEduStuTermCode
+        warn "DEPRECATED: term_code is no longer supported"
+        []
       end
 
       def term_name
-        berkeleyEduStuTermName
+        warn "DEPRECATED: term_name is no longer supported"
+        []
       end
 
       def term_status
-        berkeleyEduStuTermStatus
+        warn "DEPRECATED: term_status is no longer supported"
+        []
       end
 
       def term_year
-        berkeleyEduStuTermYear
+        warn "DEPRECATED: term_year is no longer supported"
+        []
       end
 
       def under_graduate_code
-        berkeleyEduStuUGCode
+        warn "DEPRECATED: under_graduate_code is no longer supported"
+        []
       end
 
       ##
@@ -89,9 +105,8 @@ module UCB
       # Returns an empty Array ([]) if nothing is found.
       #
       def self.find_by_uid(uid)
-        base = "uid=#{uid},ou=people,dc=berkeley,dc=edu"
-        filter = Net::LDAP::Filter.eq("objectclass", 'berkeleyEduPersonTerm')
-        search(:base => base, :filter => filter)
+        warn "DEPRECATED: Student Terms are no longer supported by LDAP. This method always returns an empty Array"
+        []
       end
 
     end

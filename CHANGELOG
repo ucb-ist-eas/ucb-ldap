@@ -1,5 +1,13 @@
 # UCB::LDAP Changelog
 
+## Version 3.0.0, May 2, 2018
+* Deprecate many classes and methods per the campus [LDAP Simplification and Standardization effort](https://calnetweb.berkeley.edu/calnet-technologists/ldap-directory-service/ldap-simplification-and-standardization)
+* Upgrade net-ldap to latest version (0.16.1)
+* Remove all hard-coded binds and replace with standard user-configured bind
+* Add `initialize` method to allow for setting configuration without actually connecting
+* Fix all failing specs
+* Add Travis integration
+
 ## Version 2.0.0.pre3, June 8, 2013
 * Reorganize file layout
 * Fix bug where credentials get switched when building org tree

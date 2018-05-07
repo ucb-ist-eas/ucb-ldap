@@ -2,42 +2,45 @@ require 'rubygems'
 require 'rspec'
 require_relative "../lib/ucb_ldap"
 
-RSpec.configure do |config|
-  # config block
-end
-
+# TODO: we should get rid of this if possible
 $TESTING = true
 
 include UCB::LDAP
-UCB::LDAP.host = "ldap-test.berkeley.edu"
 
-$binds ||= YAML.load(IO.read("#{File.dirname(__FILE__)}/binds.yml"))
-
-def bind_for(bind_key)
-  bind = $binds[bind_key] or raise("No bind found for '#{bind_key}'")
-  UCB::LDAP.authenticate(bind["username"], bind["password"])
+def load_config_file
+  config_file = "#{File.dirname(__FILE__)}/ldap_config.yml"
+  return nil unless File.exists?(config_file)
+  YAML.load(IO.read(config_file))["ldap"]
 end
 
-def address_bind
-  bind_for("address")
+def exit_with_missing_config
+  puts <<-END_MESSAGE.gsub(/^ {4}/, '')
+
+    **************** Unable to find spec/ldap_config.yml file ****************
+
+    Specs cannot run without the correct LDAP credentials. To set this up, run:
+
+        cp spec/ldap_config.yml.example spec/ldap_config.yml
+
+    Then populate the file with the correct username and password. You can get
+    these from another developer on the team.
+
+  END_MESSAGE
+  exit -1
 end
 
-def job_appointment_bind
-  bind_for("job_appointment")
+def init_with_config(config)
+  UCB::LDAP.host = config["host"]
+  UCB::LDAP.authenticate(config["username"], config["password"])
+  UCB::LDAP::Person.include_test_entries = config["include_test_entries"]
 end
 
-def namespace_bind
-  bind_for("namespace")
+
+RSpec.configure do |config|
+  # config block
+  if UCB::LDAP.username.nil?
+    config = load_config_file or exit_with_missing_config
+    init_with_config(config)
+  end
 end
 
-def org_bind
-  bind_for("org")
-end
-
-def affiliation_bind
-  bind_for("affiliation")
-end
-
-def service_bind
-  bind_for("affiliation")
-end

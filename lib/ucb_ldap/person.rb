@@ -48,10 +48,6 @@ module UCB::LDAP
   #
   #   p.org_node          #=> Org
   #   p.affiliations      #=> Array of Affiliation
-  #   p.addresses         #=> Array of Address
-  #   p.job_appointments  #=> Array of JobAppointment
-  #   p.namespaces        #=> Array of Namespace
-  #   p.student_terms     #=> Array of StudentTerm
   #
   # ==Attributes
   #
@@ -124,7 +120,12 @@ module UCB::LDAP
     alias :dept_code :deptid
 
     def dept_name
-      berkeleyEduUnitCalNetDeptName
+      warn "DEPRECATED: LDAP no longer returns department names for person records. You'll need to look up the department code in the org tree. The ucb_orgs gem can help with this"
+      deptid
+    end
+
+    def departments
+      departmentNumber
     end
 
     ##
@@ -133,7 +134,8 @@ module UCB::LDAP
     # See UCB::LDAP.authenticate().
     #
     def job_appointments
-      @job_appointments ||= JobAppointment.find_by_uid(uid)
+      warn "DEPRECATED: LDAP no longer contains job appointment data - you now need to go through HCM. This method will always return an empty Array"
+      []
     end
 
     ##

@@ -32,7 +32,7 @@ module UCB
     #
     # Entry subclasses may have convenience
     # methods that return scalars even though the schema defines
-    # the unerlying attribute as multi-valued becuase in practice the are single-valued.
+    # the underlying attribute as multi-valued becuase in practice the are single-valued.
     #
     # === Attribute Types
     #
@@ -54,26 +54,8 @@ module UCB
     # * empty booleans return +false+
     # * everything else returns +nil+ if empty
     #
-    # Attempting to get or set an attribute value for an invalid attriubte name
+    # Attempting to get an attribute value for an invalid attribute name
     # will raise a BadAttributeNameException.
-    #
-    # == Updating LDAP
-    #
-    # If your bind has privleges for updating the directory you can update
-    # the directory using methods of Entry sub-classes.  Make sure you call
-    # UCB::LDAP.authenticate before calling any update methods.
-    #
-    # There are three pairs of update methods that behave like Rails ActiveRecord
-    # methods of the same name.  These methods are fairly thin wrappers around
-    # standard LDAP update commands.
-    #
-    # The "bang" methods (those ending in "!") differ from their bangless
-    # counterparts in that the bang methods raise +DirectoryNotUpdatedException+
-    # on failure, while the bangless return +false+.
-    #
-    # * #create/#create! - class methods that do LDAP add
-    # * #update_attributes/#update_attributes! - instance methods that do LDAP modify
-    # * #delete/#delete! - instance methods that do LDAP delete
     #
     class Entry
       TESTING = false
@@ -119,106 +101,29 @@ module UCB
         self.class.canonical(string_or_symbol)
       end
 
-      ##
-      # Update an existing entry.  Returns entry if successful else false.
-      #
-      #   attrs = {:attr1 => "new_v1", :attr2 => "new_v2"}
-      #   entry.update_attributes(attrs)
-      #
-      def update_attributes(attrs)
-        attrs.each { |k, v| self.send("#{k}=", v) }
-        if modify
-          @attributes = self.class.find_by_dn(dn).attributes.dup
-          return true
-        end
-        false
-      end
-
-      ##
-      # Same as #update_attributes(), but raises DirectoryNotUpdated on failure.
-      #
-      def update_attributes!(attrs)
-        update_attributes(attrs) || raise(DirectoryNotUpdatedException)
-      end
-
-      ##
-      # Delete entry.  Returns +true+ on sucess, +false+ on failure.
-      #
-      def delete
-        net_ldap.delete(:dn => dn)
-      end
-
-      ##
-      # Same as #delete() except raises DirectoryNotUpdated on failure.
-      #
-      def delete!
-        delete || raise(DirectoryNotUpdatedException)
-      end
-
       def net_ldap
         self.class.net_ldap
       end
 
-
+      # TODO: these should definitely be private - we shouldn't test private methods
       #private unless TESTING
 
       ##
-      # Used to get/set attribute values.
+      # Used to get attribute values.
       #
       # If we can't make an attribute name out of method, let
       # regular method_missing() handle it.
       #
       def method_missing(method, *args) #:nodoc:
-        setter_method?(method) ? value_setter(method, *args) : value_getter(method)
+        schema_attribute = self.class.schema_attribute(method)
+        raw_value = attributes[canonical(schema_attribute.name)]
+        schema_attribute.get_value(raw_value)
       rescue BadAttributeNameException
         return super
       end
 
-      ##
-      # Returns +true+ if _method_ is a "setter", i.e., ends in "=".
-      #
-      def setter_method?(method)
-        method.to_s[-1, 1] == "="
-      end
-
-      ##
-      # Called by method_missing() to get an attribute value.
-      #
-      def value_getter(method)
-        schema_attribute = self.class.schema_attribute(method)
-        raw_value = attributes[canonical(schema_attribute.name)]
-        schema_attribute.get_value(raw_value)
-      end
-
-      ##
-      # Called by method_missing() to set an attribute value.
-      #
-      def value_setter(method, *args)
-        schema_attribute = self.class.schema_attribute(method.to_s.chop)
-        attr_key = canonical(schema_attribute.name)
-        assigned_attributes[attr_key] = schema_attribute.ldap_value(args[0])
-      end
-
       def assigned_attributes
         @assigned_attributes ||= {}
-      end
-
-      def modify_operations
-        ops = []
-        assigned_attributes.keys.sort_by { |k| k.to_s }.each do |key|
-          value = assigned_attributes[key]
-          op = value.nil? ? :delete : :replace
-          ops << [op, key, value]
-        end
-        ops
-      end
-
-      def modify()
-        if UCB::LDAP.net_ldap.modify(:dn => dn, :operations => modify_operations)
-          @assigned_attributes = nil
-          return true
-        end
-        false
       end
 
       # Class methods

@@ -99,9 +99,8 @@ module UCB
       # Returns an empty Array ([]) if nothing is found.
       #
       def self.find_by_uid(uid)
-        base = "uid=#{uid},ou=people,dc=berkeley,dc=edu"
-        filter = Net::LDAP::Filter.eq("objectclass", 'berkeleyEduPersonService')
-        search(:base => base, :filter => filter)
+        warn "DEPRECATED: Services are longer supported by LDAP. This method always returns an empty Array"
+        []
       end
 
     end

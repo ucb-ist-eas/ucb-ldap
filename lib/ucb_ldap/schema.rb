@@ -79,10 +79,10 @@ module UCB #:nodoc:
         end
 
         # Load attributes from URL or file
-        def load_attributes #:nodoc:
+        def load_attributes(no_warn=false) #:nodoc:
           load_attributes_from_url
         rescue
-          puts "Warning: schema loading from file"
+          puts "Warning: schema loading from file" unless no_warn
           load_attributes_from_file
         end
 

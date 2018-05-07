@@ -21,7 +21,8 @@ module UCB
       @entity_name = 'personAffiliateAffiliation'
 
       def create_datetime
-        berkeleyEduAffCreateDate
+        warn "DEPRECATED: create_datetime is no longer supported"
+        []
       end
 
       def expired_by
@@ -29,7 +30,8 @@ module UCB
       end
 
       def expiration_date
-         UCB::LDAP.local_date_parse(berkeleyEduAffExpDate)
+        warn "DEPRECATED: expiration_date is no longer supported"
+        []
       end
 
       def affiliate_id
@@ -65,7 +67,7 @@ module UCB
       end
 
       def dept_name
-        berkeleyEduUnitCalNetDeptName
+        warn "DEPRECATED: dept_name is no longer supported"
       end
 
       class << self
