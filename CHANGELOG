@@ -4,6 +4,7 @@
 * Deprecate many classes and methods per the campus [LDAP Simplification and Standardization effort](https://calnetweb.berkeley.edu/calnet-technologists/ldap-directory-service/ldap-simplification-and-standardization)
 * Upgrade net-ldap to latest version (0.16.1)
 * Remove all hard-coded binds and replace with standard user-configured bind
+* Add `initialize` method to allow for setting configuration without actually connecting
 * Fix all failing specs
 * Add Travis integration
 
