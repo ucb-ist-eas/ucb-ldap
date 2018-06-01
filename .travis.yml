@@ -16,4 +16,4 @@ cache:
   directories:
   - vendor/bundle
 notifications:
-  slack: infinitered:vEwHyTPtHfTgpT5xdCA2ZkgX
+  slack: infinitered:4s2uT0dj614H6BUJteVhFGqo
