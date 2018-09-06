@@ -327,14 +327,9 @@ module UCB
           return @all_nodes if @all_nodes
           return nodes_from_test_cache if $TESTING && @test_node_cache
 
-          tree_username = "uid=istaswa-ruby,ou=applications,dc=berkeley,dc=edu"
-          tree_password = "t00lBox12"
-
-          UCB::LDAP.with_credentials(tree_username, tree_password) do
-            @all_nodes = search.inject({}) do |accum, org|
-              accum[org.deptid] = org if org.deptid != "Org Units"
-              accum
-            end
+          @all_nodes = search.inject({}) do |accum, org|
+            accum[org.deptid] = org if org.deptid != "Org Units"
+            accum
           end
 
           build_test_node_cache if $TESTING
