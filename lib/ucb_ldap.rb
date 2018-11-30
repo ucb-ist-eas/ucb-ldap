@@ -56,7 +56,7 @@ module UCB
     end
 
 
-    HOST_PRODUCTION = 'nds.berkeley.edu'
+    HOST_PRODUCTION = 'ldap.berkeley.edu'
 
     class << self
       # Execute UCB::LDAP commands with a different username and password.
