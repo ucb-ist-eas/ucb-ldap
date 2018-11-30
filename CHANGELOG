@@ -1,5 +1,11 @@
 # UCB::LDAP Changelog
 
+## Version 3.1.1, November 30, 2018
+* Switch default server from nds.berkeley.edu to ldap.berkeley.edu
+
+## Version 3.1.0, September 6, 2018
+* Small bug fixes
+
 ## Version 3.0.0, May 2, 2018
 * Deprecate many classes and methods per the campus [LDAP Simplification and Standardization effort](https://calnetweb.berkeley.edu/calnet-technologists/ldap-directory-service/ldap-simplification-and-standardization)
 * Upgrade net-ldap to latest version (0.16.1)
