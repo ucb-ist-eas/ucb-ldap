@@ -1,5 +1,8 @@
 # UCB::LDAP Changelog
 
+## Version 3.1.2, January 3, 2020
+* Remove case-sensitive match for top-level node name
+
 ## Version 3.1.1, November 30, 2018
 * Switch default server from nds.berkeley.edu to ldap.berkeley.edu
 
