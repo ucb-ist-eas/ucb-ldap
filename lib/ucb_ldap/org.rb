@@ -382,7 +382,7 @@ module UCB
         def calculate_all_child_nodes
           @all_nodes.values.each { |node| node.init_child_nodes }
           @all_nodes.values.each do |node|
-            next if node.deptid == 'UCBKL' || node.deptid == "Org Units"
+            next if node.deptid == 'UCBKL' || node.deptid.downcase == "org units"
             parent_node = find_by_ou_from_cache(node.parent_deptids.last)
             parent_node.push_child_node(node)
           end
