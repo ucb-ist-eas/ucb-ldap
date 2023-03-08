@@ -1,5 +1,8 @@
 # UCB::LDAP Changelog
 
+## Version 3.1.3, March 8, 2023
+* Switch to latest version of net-ldap
+
 ## Version 3.1.2, January 3, 2020
 * Remove case-sensitive match for top-level node name
 
