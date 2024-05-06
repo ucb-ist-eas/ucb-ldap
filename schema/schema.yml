@@ -1285,7 +1285,7 @@ person:
       objectClass: berkeleyEduPerson
       required: false
       syntax: string
-    berkeleyEduOfficialEmail:
+    berkeleyEduAlternateId:
       aliases:
         - ucbemail
       description: 'Email Addresses'

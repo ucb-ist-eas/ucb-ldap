@@ -28,7 +28,7 @@ module UCB
       end
 
       def officialemail
-        berkeleyEduOfficialEmail.first
+        berkeleyEduAlternateId.first
       end
 
       def phone
