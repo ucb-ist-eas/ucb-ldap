@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This repo has been moved to Gitlab, and this version is now read-only.
+
 # UC Berkeley LDAP
 
 UCB::LDAP is a wrapper module around Net::LDAP intended to simplify searching the UC Berkeley
